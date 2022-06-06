@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivHomeTeam"
             android:layout_width="@dimen/team_image_size"
             android:layout_height="@dimen/team_image_size"
@@ -21,7 +21,7 @@
             tools:srcCompat="@tools:sample/avatars"
             android:contentDescription="@string/txt_flag_home_team" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivVisitorTeam"
             android:layout_width="@dimen/team_image_size"
             android:layout_height="@dimen/team_image_size"
@@ -32,7 +32,7 @@
             tools:srcCompat="@tools:sample/avatars"
             android:contentDescription="@string/txt_flag_visitor_team" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvHomeTeam"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
             app:layout_constraintStart_toStartOf="@+id/ivHomeTeam"
             app:layout_constraintTop_toBottomOf="@+id/ivHomeTeam" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvHomeScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
             app:layout_constraintStart_toEndOf="@+id/ivHomeTeam"
             app:layout_constraintTop_toTopOf="@+id/ivHomeTeam" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvVisitorScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
             app:layout_constraintStart_toEndOf="@+id/tvVersus"
             app:layout_constraintTop_toTopOf="@+id/ivVisitorTeam" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvVersus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/ivHomeTeam" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvVisitorTeam"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
