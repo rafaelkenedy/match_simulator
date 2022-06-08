@@ -49,24 +49,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupFloatingActionButton() {
-
         binding.fabSimulate.setOnClickListener {
-
-            val random = Random()
-            for(i in 0 until matchesAdapter.itemCount){
-                val match = matchesAdapter.matches[i]
-                match.homeTeam.score = random.nextInt(match.homeTeam.stars + 1)
-                match.visitorTeam.score = random.nextInt(match.visitorTeam.stars + 1)
-                matchesAdapter.notifyItemChanged(i)
-
-            }
-
-
-//            it.animate().rotation(360F).setDuration(500).setListener(object : AnimatorListenerAdapter() {
-//            })
-
+            it.animate().rotationBy(360F).setDuration(500)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        val random = Random()
+                        for (i in 0 until matchesAdapter.itemCount) {
+                            val match: Match = matchesAdapter.matches[i]
+                            match.homeTeam.score = (random.nextInt(match.homeTeam.stars + 1))
+                            match.visitorTeam.score = (random.nextInt(match.visitorTeam.stars+ 1))
+                            matchesAdapter.notifyItemChanged(i)
+                        }
+                    }
+                })
         }
     }
+
 
     private fun setupMatchesRefresh() {
         binding.srMatches.setOnRefreshListener(this::findMatchesFromApi)
