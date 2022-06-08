@@ -1,4 +1,4 @@
-package com.rafael.simulator
+package com.rafael.simulator.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

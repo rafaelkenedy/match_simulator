@@ -4,4 +4,5 @@
     <string name="txt_flag_home_team">Flag home team</string>
     <string name="txt_flag_visitor_team">Flag visitor team</string>
     <string name="tx_versus" translatable="false">X</string>
+    <string name="error_api">Erro inesperado!</string>
 </resources>
