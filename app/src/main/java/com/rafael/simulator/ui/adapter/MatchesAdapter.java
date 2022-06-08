@@ -1,6 +1,7 @@
 package com.rafael.simulator.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.rafael.simulator.databinding.MatchItemBinding;
 import com.rafael.simulator.domain.Match;
+import com.rafael.simulator.ui.DetailActivity;
 
 import java.util.List;
 
@@ -22,6 +24,9 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
         this.matches = matches;
     }
 
+    public List<Match> getMatches() {
+        return matches;
+    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -37,8 +42,20 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
 
         Glide.with(context).load(match.getHomeTeam().getImage()).into(holder.binding.ivHomeTeam);
         holder.binding.tvHomeTeam.setText(match.getHomeTeam().getName());
+        if (match.getHomeTeam().getScore() != null){
+            holder.binding.tvHomeScore.setText(match.getHomeTeam().getScore().toString());
+        }
         Glide.with(context).load(match.getVisitorTeam().getImage()).into(holder.binding.ivVisitorTeam);
         holder.binding.tvVisitorTeam.setText(match.getVisitorTeam().getName());
+        if (match.getVisitorTeam().getScore() != null){
+            holder.binding.tvVisitorScore.setText(match.getVisitorTeam().getScore().toString());
+        }
+
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, DetailActivity.class);
+            intent.putExtra(DetailActivity.Extras.MATCH, match);
+            context.startActivity(intent);
+        });
     }
 
     @Override

@@ -18,6 +18,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -50,7 +52,18 @@ class MainActivity : AppCompatActivity() {
 
         binding.fabSimulate.setOnClickListener {
 
-            it.animate().rotation(360F).setDuration(500)
+            val random = Random()
+            for(i in 0 until matchesAdapter.itemCount){
+                val match = matchesAdapter.matches[i]
+                match.homeTeam.score = random.nextInt(match.homeTeam.stars + 1)
+                match.visitorTeam.score = random.nextInt(match.visitorTeam.stars + 1)
+                matchesAdapter.notifyItemChanged(i)
+
+            }
+
+
+//            it.animate().rotation(360F).setDuration(500).setListener(object : AnimatorListenerAdapter() {
+//            })
 
         }
     }
