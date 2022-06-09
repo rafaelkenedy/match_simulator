@@ -3,10 +3,8 @@ package com.rafael.simulator.ui
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.rafael.simulator.R
 import com.rafael.simulator.data.MatchesApi
@@ -50,6 +48,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupFloatingActionButton() {
         binding.fabSimulate.setOnClickListener {
+
             it.animate().rotationBy(360F).setDuration(500)
                 .setListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
@@ -57,7 +56,7 @@ class MainActivity : AppCompatActivity() {
                         for (i in 0 until matchesAdapter.itemCount) {
                             val match: Match = matchesAdapter.matches[i]
                             match.homeTeam.score = (random.nextInt(match.homeTeam.stars + 1))
-                            match.visitorTeam.score = (random.nextInt(match.visitorTeam.stars+ 1))
+                            match.visitorTeam.score = (random.nextInt(match.visitorTeam.stars + 1))
                             matchesAdapter.notifyItemChanged(i)
                         }
                     }
@@ -65,43 +64,47 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     private fun setupMatchesRefresh() {
         binding.srMatches.setOnRefreshListener(this::findMatchesFromApi)
     }
 
-    private fun showErrorMessage(){
+    private fun showErrorMessage() {
         Snackbar.make(binding.fabSimulate, R.string.error_api, Snackbar.LENGTH_LONG).show()
     }
+
     private fun setupMatchesList() {
         binding.rvMatches.setHasFixedSize(true)
         binding.rvMatches.layoutManager = LinearLayoutManager(this)
+        MatchesAdapter(Collections.emptyList()).also { matchesAdapter = it }
+        binding.rvMatches.adapter = matchesAdapter
         findMatchesFromApi()
     }
 
     private fun findMatchesFromApi() {
         binding.srMatches.isRefreshing = true
-        matchesApi.matches.enqueue(object : Callback<List<Match>> {
-            override fun onResponse(call: Call<List<Match>>, response: Response<List<Match>>) {
-                if (response.isSuccessful) {
-                    val matches: List<Match>? = response.body()
-                    if (matches != null) {
+        with(matchesApi) {
+            matches.enqueue(object : Callback<List<Match>> {
+                override fun onResponse(call: Call<List<Match>>, response: Response<List<Match>>) {
+                    if (response.isSuccessful) {
+                        val matches: List<Match>? = response.body()
+                        if (matches != null) {
 
-                        matchesAdapter = MatchesAdapter(matches)
-                        binding.rvMatches.adapter = matchesAdapter
+                            matchesAdapter = MatchesAdapter(matches)
+                            binding.rvMatches.adapter = matchesAdapter
+                        }
+                    } else {
+                        showErrorMessage()
                     }
-                } else {
-                    showErrorMessage()
+                    binding.srMatches.isRefreshing = false
+
                 }
-                binding.srMatches.isRefreshing = false
 
-            }
+                override fun onFailure(call: Call<List<Match>>, t: Throwable) {
+                    showErrorMessage()
+                    binding.srMatches.isRefreshing = false
+                }
 
-            override fun onFailure(call: Call<List<Match>>, t: Throwable) {
-                showErrorMessage()
-                binding.srMatches.isRefreshing = false
-            }
-
-        })
+            })
+        }
     }
 }
